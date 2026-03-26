@@ -1,7 +1,7 @@
 # PetShop Amigo Animal - Projeto da Disciplina web
 
 ## 📋 Sobre o Projeto
-Este é um sistema web desenvolvido em HTML semântico para um petshop, criado como parte da Fase 1 do Projeto da Disciplina. O sistema apresenta produtos e serviços oferecidos pelo petshop de forma organizada e acessível.
+Este é um sistema web desenvolvido em HTML, CSS e JavaScript para um petshop, criado como parte da Fase 2 do Projeto da Disciplina. O sistema apresenta produtos e serviços oferecidos pelo petshop de forma organizada e acessível.
 
 ## 🎯 Objetivo do Sistema
 Criar uma plataforma online intuitiva para que clientes possam visualizar os produtos e serviços oferecidos pelo petshop, com informações detalhadas sobre cada item.
