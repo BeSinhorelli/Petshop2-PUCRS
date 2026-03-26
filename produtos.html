@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - PetShop Amigo Animal</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* CSS Personalizado */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        /* Header */
+        .header-petshop {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header-petshop h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        /* Navegação */
+        .navbar-custom {
+            background-color: #388E3C !important;
+            padding: 15px 0;
+        }
+        
+        .navbar-custom .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            transform: scale(1.1);
+            color: #FFD700 !important;
+        }
+        
+        /* Títulos */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            color: #2E7D32;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: #4CAF50;
+            margin: 15px auto;
+        }
+        
+        .category-title {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 30px 0 20px;
+            font-size: 1.8em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        /* Cards de produtos */
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+            background: white;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FFD700;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .product-card .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .product-card .card-title {
+            color: #2E7D32;
+            font-weight: bold;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 0.95em;
+            margin: 10px 0;
+            min-height: 60px;
+        }
+        
+        .product-detail {
+            background: #f5f5f5;
+            padding: 8px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        .product-price {
+            font-size: 2em;
+            color: #4CAF50;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .btn-comprar {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-comprar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Carrinho flutuante */
+        .cart-floating {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50px;
+            padding: 15px 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart-floating:hover {
+            transform: scale(1.1);
+            background: #388E3C;
+        }
+        
+        .cart-count {
+            background: #FFD700;
+            color: #333;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Barra de busca */
+        .search-box {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .search-box input {
+            border-radius: 50px 0 0 50px;
+            border: 2px solid #4CAF50;
+            padding: 15px 25px;
+            font-size: 1.1em;
+        }
+        
+        .search-box button {
+            border-radius: 0 50px 50px 0;
+            background: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            padding: 15px 30px;
+            font-weight: bold;
+        }
+        
+        .search-box button:hover {
+            background: #388E3C;
+        }
+        
+        /* Filtros */
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        
+        .filter-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .filter-btn.active {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        /* Footer */
+        .footer-petshop {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-petshop h4 {
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+        
+        .footer-petshop a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-petshop a:hover {
+            color: #FFD700;
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        /* Acessibilidade */
+        .accessibility-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .accessibility-btn:hover {
+            background-color: #388E3C;
+            transform: scale(1.1);
+        }
+        
+        .high-contrast {
+            background-color: black !important;
+            color: yellow !important;
+        }
+        
+        .high-contrast a, .high-contrast label, .high-contrast h1, .high-contrast h2, .high-contrast h3 {
+            color: cyan !important;
+        }
+        
+        .high-contrast .product-card {
+            background-color: #222 !important;
+            border: 2px solid yellow !important;
+        }
+        
+        .high-contrast .btn-comprar {
+            background: yellow !important;
+            color: black !important;
+        }
+        
+        /* Relógio */
+        .clock-container {
+            background-color: #2E7D32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        
+        /* Mensagem de produto adicionado */
+        .toast-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão de Acessibilidade -->
+    <button class="accessibility-btn" onclick="toggleHighContrast()">
+        🌓 Alto Contraste
+    </button>
+
+    <!-- Carrinho Flutuante -->
+    <div class="cart-floating" onclick="verCarrinho()">
+        <span>🛒 Carrinho</span>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header-petshop text-center">
+        <div class="container">
+            <h1>🐾 PetShop Amigo Animal 🐾</h1>
+            <p class="lead">Seu pet merece o melhor cuidado e carinho</p>
+        </div>
+    </header>
+
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">🏠 Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produtos.html">🛍️ Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicos.html">🐕 Serviços</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">📞 Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastro.html">📝 Cadastro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Relógio Dinâmico -->
+    <div class="text-center mt-3">
+        <div class="clock-container" id="clock"></div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <div class="container">
+            <h2 class="section-title">🛍️ Nossos Produtos 🛍️</h2>
+            
+            <!-- Barra de Busca -->
+            <div class="search-box">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar produtos..." onkeyup="filtrarProdutos()">
+                    <button class="btn btn-primary" type="button">Buscar</button>
+                </div>
+            </div>
+            
+            <!-- Filtros por Categoria -->
+            <div class="filters text-center">
+                <h5>Filtrar por categoria:</h5>
+                <button class="filter-btn active" onclick="filtrarCategoria('todos')">Todos</button>
+                <button class="filter-btn" onclick="filtrarCategoria('acessorios')">📦 Acessórios</button>
+                <button class="filter-btn" onclick="filtrarCategoria('racoes')">🍖 Rações</button>
+                <button class="filter-btn" onclick="filtrarCategoria('higiene')">🧴 Higiene</button>
+            </div>
+            
+            <!-- ACESSÓRIOS -->
+            <div class="text-center">
+                <h3 class="category-title" id="acessorios">📦 Acessórios</h3>
+            </div>
+            
+            <div class="row" id="acessorios-row">
+                <!-- Camiseta Pet Verão -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="acessorios">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/roupaverao.jfif" alt="Camiseta de verão para cachorro na cor laranja com estampa divertida">
+                            <span class="product-badge">Novo</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Camiseta Pet Verão</h5>
+                            <p class="product-description">Camiseta de algodão com estampas divertidas, perfeita para dias quentes</p>
+                            <div class="product-detail">
+                                <strong>Tamanhos:</strong> P, M, G, GG
+                            </div>
+                            <div class="product-price">R$ 59,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Camiseta Pet Verão', 59.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cama Confortável -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="acessorios">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/cama.webp" alt="Cama confortável para cachorro na cor cinza">
+                            <span class="product-badge">Oferta</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Cama Confortável</h5>
+                            <p class="product-description">Cama macia com enchimento de fibra siliconada, proporciona máximo conforto</p>
+                            <div class="product-detail">
+                                <strong>Tamanho:</strong> Único
+                            </div>
+                            <div class="product-price">R$ 129,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Cama Confortável', 129.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brinquedo Bolinha -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="acessorios">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/brinquedo_sortido_para_cachorro.webp" alt="Brinquedo bolinha de borracha colorida para cachorro">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bolinha de Borracha</h5>
+                            <p class="product-description">Bolinha resistente para cães de todos os portes, ideal para brincadeiras</p>
+                            <div class="product-detail">
+                                <strong>Material:</strong> Borracha resistente
+                            </div>
+                            <div class="product-price">R$ 25,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Bolinha de Borracha', 25.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RAÇÕES -->
+            <div class="text-center">
+                <h3 class="category-title" id="racoes">🍖 Rações</h3>
+            </div>
+            
+            <div class="row" id="racoes-row">
+                <!-- Ração Filhotes -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="racoes">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/raçãofilhote.jpg" alt="Pacote de ração premium para filhotes">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ração Filhotes</h5>
+                            <p class="product-description">Ração premium para filhotes de 2 a 12 meses, rica em nutrientes</p>
+                            <div class="product-detail">
+                                <strong>Peso:</strong> 12kg | <strong>Sabor:</strong> Frango
+                            </div>
+                            <div class="product-price">R$ 169,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Ração Filhotes', 169.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ração Adultos -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="racoes">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/raçãoadulto.webp" alt="Pacote de ração super premium para cães adultos">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ração Adultos</h5>
+                            <p class="product-description">Ração super premium para cães adultos, com ingredientes selecionados</p>
+                            <div class="product-detail">
+                                <strong>Peso:</strong> 15kg | <strong>Sabor:</strong> Carne
+                            </div>
+                            <div class="product-price">R$ 189,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Ração Adultos', 189.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ração Sênior -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="racoes">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/raçãoidoso.jpg" alt="Pacote de ração especial para cães idosos">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ração Sênior</h5>
+                            <p class="product-description">Ração especial para cães idosos, com condroprotetores e vitaminas</p>
+                            <div class="product-detail">
+                                <strong>Peso:</strong> 10kg | <strong>Sabor:</strong> Arroz e frango
+                            </div>
+                            <div class="product-price">R$ 159,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Ração Sênior', 159.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- HIGIENE -->
+            <div class="text-center">
+                <h3 class="category-title" id="higiene">🧴 Produtos de Higiene</h3>
+            </div>
+            
+            <div class="row" id="higiene-row">
+                <!-- Shampoo Neutro -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="higiene">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/shampoo.jfif" alt="Frasco de shampoo neutro para cães e gatos">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Shampoo Neutro</h5>
+                            <p class="product-description">Shampoo com pH neutro para cães e gatos, hipoalergênico</p>
+                            <div class="product-detail">
+                                <strong>Conteúdo:</strong> 500ml
+                            </div>
+                            <div class="product-price">R$ 35,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Shampoo Neutro', 35.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tapete Higiênico -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="higiene">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/tapete.webp" alt="Pacote de tapete higiênico para cães">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tapete Higiênico</h5>
+                            <p class="product-description">Tapete com 5 camadas de absorção, anti-vazamento</p>
+                            <div class="product-detail">
+                                <strong>Pacote:</strong> 30 unidades
+                            </div>
+                            <div class="product-price">R$ 79,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Tapete Higiênico', 79.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fralda Descartável -->
+                <div class="col-lg-4 col-md-6 produto-item" data-categoria="higiene">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/Melhores-Fraldas-para-Cachorro.jpg" alt="Pacote de fraldas descartáveis para cachorro">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Fralda Descartável</h5>
+                            <p class="product-description">Fralda com elástico ajustável, ideal para cães incontinentes</p>
+                            <div class="product-detail">
+                                <strong>Pacote:</strong> 20 unidades | <strong>Tamanhos:</strong> P, M, G
+                            </div>
+                            <div class="product-price">R$ 45,90</div>
+                            <button class="btn-comprar" onclick="adicionarAoCarrinho('Fralda Descartável', 45.90)">
+                                🛒 Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-petshop">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>PetShop Amigo Animal</h4>
+                    <p>📞 (11) 3456-7890</p>
+                    <p>📧 contato@petshop.com</p>
+                    <p>📍 Rua dos Animais, 123</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h4>Horário</h4>
+                    <p>Seg a Sex: 8h às 20h</p>
+                    <p>Sábados: 9h às 18h</p>
+                    <p>Domingos: Fechado</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h4>Links Rápidos</h4>
+                    <p><a href="index.html">🏠 Início</a></p>
+                    <p><a href="produtos.html">🛍️ Produtos</a></p>
+                    <p><a href="servicos.html">🐕 Serviços</a></p>
+                    <p><a href="contato.html">📞 Contato</a></p>
+                    <p><a href="cadastro.html">📝 Cadastro</a></p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h4>Redes Sociais</h4>
+                    <p>📱 Instagram: @petshop</p>
+                    <p>📘 Facebook: /petshop</p>
+                    <p>💬 WhatsApp: (11) 98765-4321</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2026 PetShop Amigo Animal. Todos os direitos reservados.</p>
+                <p>Desenvolvido por Bernardo - Projeto da Disciplina Web</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript Personalizado -->
+    <script>
+        // Variáveis do carrinho
+        let carrinho = [];
+        let cartCount = 0;
+        
+        // Função para atualizar relógio
+        function atualizarRelogio() {
+            const agora = new Date();
+            const horas = agora.getHours().toString().padStart(2, '0');
+            const minutos = agora.getMinutes().toString().padStart(2, '0');
+            const segundos = agora.getSeconds().toString().padStart(2, '0');
+            
+            const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            const diaSemana = diasSemana[agora.getDay()];
+            
+            const relogio = document.getElementById('clock');
+            if (relogio) {
+                relogio.innerHTML = `🕐 ${diaSemana} - ${horas}:${minutos}:${segundos}`;
+            }
+        }
+        
+        setInterval(atualizarRelogio, 1000);
+        
+        // Função para adicionar ao carrinho
+        function adicionarAoCarrinho(produto, preco) {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+            
+            carrinho.push({
+                produto: produto,
+                preco: preco
+            });
+            
+            // Mostrar mensagem de confirmação
+            mostrarMensagem(`✅ ${produto} adicionado ao carrinho!`);
+            
+            // Salvar no localStorage
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            localStorage.setItem('cartCount', cartCount);
+        }
+        
+        // Função para mostrar mensagem temporária
+        function mostrarMensagem(texto) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.innerText = texto;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // Função para ver carrinho
+        function verCarrinho() {
+            if (cartCount === 0) {
+                alert('🛒 Seu carrinho está vazio!');
+            } else {
+                let mensagem = '🛒 Itens no carrinho:\n\n';
+                let total = 0;
+                
+                carrinho.forEach((item, index) => {
+                    mensagem += `${index + 1}. ${item.produto} - R$ ${item.preco.toFixed(2)}\n`;
+                    total += item.preco;
+                });
+                
+                mensagem += `\n💰 Total: R$ ${total.toFixed(2)}`;
+                alert(mensagem);
+            }
+        }
+        
+        // Função para filtrar produtos por busca
+        function filtrarProdutos() {
+            const termo = document.getElementById('searchInput').value.toLowerCase();
+            const produtos = document.querySelectorAll('.produto-item');
+            
+            produtos.forEach(produto => {
+                const titulo = produto.querySelector('.card-title').innerText.toLowerCase();
+                const descricao = produto.querySelector('.product-description').innerText.toLowerCase();
+                
+                if (titulo.includes(termo) || descricao.includes(termo)) {
+                    produto.style.display = 'block';
+                } else {
+                    produto.style.display = 'none';
+                }
+            });
+        }
+        
+        // Função para filtrar por categoria
+        function filtrarCategoria(categoria) {
+            const produtos = document.querySelectorAll('.produto-item');
+            
+            // Atualizar botões ativos
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            produtos.forEach(produto => {
+                if (categoria === 'todos' || produto.dataset.categoria === categoria) {
+                    produto.style.display = 'block';
+                } else {
+                    produto.style.display = 'none';
+                }
+            });
+        }
+        
+        // Função de acessibilidade - Alto contraste
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            
+            if (document.body.classList.contains('high-contrast')) {
+                localStorage.setItem('highContrast', 'true');
+                mostrarMensagem('🌓 Modo alto contraste ativado!');
+            } else {
+                localStorage.setItem('highContrast', 'false');
+                mostrarMensagem('🌓 Modo alto contraste desativado!');
+            }
+        }
+        
+        // Carregar dados salvos
+        window.onload = function() {
+            // Carregar preferência de contraste
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+            
+            // Carregar carrinho
+            const carrinhoSalvo = localStorage.getItem('carrinho');
+            const cartCountSalvo = localStorage.getItem('cartCount');
+            
+            if (carrinhoSalvo) {
+                carrinho = JSON.parse(carrinhoSalvo);
+                cartCount = parseInt(cartCountSalvo) || 0;
+                document.getElementById('cartCount').innerText = cartCount;
+            }
+            
+            // Inicializar relógio
+            atualizarRelogio();
+        };
+    </script>
+</body>
+</html>

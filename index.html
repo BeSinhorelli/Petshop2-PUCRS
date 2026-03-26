@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop Amigo Animal - Seu pet merece o melhor</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* CSS Personalizado */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        /* Header */
+        .header-petshop {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header-petshop h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        /* Navegação */
+        .navbar-custom {
+            background-color: #388E3C !important;
+            padding: 15px 0;
+        }
+        
+        .navbar-custom .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            transform: scale(1.1);
+            color: #FFD700 !important;
+        }
+        
+        /* Seções */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            color: #2E7D32;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: #4CAF50;
+            margin: 15px auto;
+        }
+        
+        /* Cards de produtos */
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .product-card img {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .product-card .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .product-card .card-title {
+            color: #2E7D32;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .product-card .price {
+            font-size: 1.5em;
+            color: #4CAF50;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .product-card .btn-comprar {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card .btn-comprar:hover {
+            background-color: #388E3C;
+            transform: scale(1.05);
+        }
+        
+        /* Carrossel */
+        .carousel-container {
+            margin: 30px auto;
+            max-width: 1200px;
+        }
+        
+        .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+        
+        .carousel-caption {
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            padding: 20px;
+            bottom: 50px;
+        }
+        
+        .carousel-caption h3 {
+            color: #FFD700;
+            font-size: 2em;
+        }
+        
+        /* Footer */
+        .footer-petshop {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-petshop h4 {
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+        
+        .footer-petshop a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-petshop a:hover {
+            color: #FFD700;
+        }
+        
+        .social-icons i {
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icons i:hover {
+            transform: scale(1.2);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        /* Banner de boas-vindas */
+        .welcome-banner {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-banner h2 {
+            color: #2E7D32;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+        
+        .welcome-banner p {
+            color: #555;
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Acessibilidade - Alto contraste */
+        .high-contrast {
+            background-color: black !important;
+            color: yellow !important;
+        }
+        
+        .high-contrast a {
+            color: cyan !important;
+        }
+        
+        .high-contrast button {
+            background-color: yellow !important;
+            color: black !important;
+            border: 2px solid white !important;
+        }
+        
+        /* Botão de acessibilidade */
+        .accessibility-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .accessibility-btn:hover {
+            background-color: #388E3C;
+            transform: scale(1.1);
+        }
+        
+        /* Relógio */
+        .clock-container {
+            background-color: #2E7D32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão de Acessibilidade -->
+    <button class="accessibility-btn" onclick="toggleHighContrast()">
+        🌓 Alto Contraste
+    </button>
+
+    <!-- Header -->
+    <header class="header-petshop text-center">
+        <div class="container">
+            <h1>🐾 PetShop Amigo Animal 🐾</h1>
+            <p class="lead">Seu pet merece o melhor cuidado e carinho</p>
+        </div>
+    </header>
+
+    <!-- Navegação com Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">🏠 Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produtos.html">🛍️ Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicos.html">🐕 Serviços</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">📞 Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastro.html">📝 Cadastro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Relógio Dinâmico -->
+    <div class="text-center mt-3">
+        <div class="clock-container" id="clock"></div>
+    </div>
+
+    <!-- Banner de boas-vindas -->
+    <div class="welcome-banner">
+        <div class="container">
+            <h2>Bem-vindo ao PetShop Amigo Animal!</h2>
+            <p>Há mais de 10 anos cuidando com amor e dedicação do seu melhor amigo.</p>
+            <p>Oferecemos produtos de qualidade e serviços especializados para seu pet.</p>
+        </div>
+    </div>
+
+  
+
+    <!-- PRODUTOS EM DESTAQUE -->
+    <div class="container">
+        <h2 class="section-title">✨ Produtos em Destaque ✨</h2>
+        
+        <!-- Acessórios -->
+        <h3 class="mt-5 mb-4">📦 Acessórios</h3>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card product-card">
+                    <img src="imagens/roupacachorro.webp" class="card-img-top" alt="Roupa de frio para cachorro na cor vermelha">
+                    <div class="card-body">
+                        <h5 class="card-title">Conjunto de Roupinha de Frio</h5>
+                        <p class="card-text">Tecido de algodão, tamanhos P, M e G</p>
+                        <p class="price">R$ 89,90</p>
+                        <button class="btn-comprar" onclick="mostrarMensagem('Roupa adicionada ao carrinho!')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card product-card">
+                    <img src="imagens/brinquedo_sortido_para_cachorro.webp" class="card-img-top" alt="Brinquedo interativo em formato de osso">
+                    <div class="card-body">
+                        <h5 class="card-title">Brinquedo Interativo</h5>
+                        <p class="card-text">Osso de borracha resistente com som</p>
+                        <p class="price">R$ 35,50</p>
+                        <button class="btn-comprar" onclick="mostrarMensagem('Brinquedo adicionado ao carrinho!')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rações -->
+        <h3 class="mt-5 mb-4">🍖 Rações</h3>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card product-card">
+                    <img src="imagens/raçãopremier.webp" class="card-img-top" alt="Saco de ração Premier para cães adultos">
+                    <div class="card-body">
+                        <h5 class="card-title">Ração Premier Adultos</h5>
+                        <p class="card-text">Sabor frango - 15kg</p>
+                        <p class="price">R$ 189,90</p>
+                        <button class="btn-comprar" onclick="mostrarMensagem('Ração adicionada ao carrinho!')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card product-card">
+                    <img src="imagens/raçãogolden.webp" class="card-img-top" alt="Saco de ração Golden para cães adultos">
+                    <div class="card-body">
+                        <h5 class="card-title">Ração Golden Adultos</h5>
+                        <p class="card-text">Sabor carne - 10kg</p>
+                        <p class="price">R$ 145,90</p>
+                        <button class="btn-comprar" onclick="mostrarMensagem('Ração adicionada ao carrinho!')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Higiene -->
+        <h3 class="mt-5 mb-4">🧴 Produtos de Higiene</h3>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card product-card">
+                    <img src="imagens/tapete.webp" class="card-img-top" alt="Pacote de tapete higiênico">
+                    <div class="card-body">
+                        <h5 class="card-title">Tapete Higiênico</h5>
+                        <p class="card-text">Pacote com 30 unidades</p>
+                        <p class="price">R$ 79,90</p>
+                        <button class="btn-comprar" onclick="mostrarMensagem('Tapete adicionado ao carrinho!')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card product-card">
+                    <img src="imagens/Melhores-Fraldas-para-Cachorro.jpg" class="card-img-top" alt="Pacote de fraldas para cachorro">
+                    <div class="card-body">
+                        <h5 class="card-title">Fraldas Descartáveis</h5>
+                        <p class="card-text">Pacote com 20 unidades</p>
+                        <p class="price">R$ 45,90</p>
+                        <button class="btn-comprar" onclick="mostrarMensagem('Fraldas adicionadas ao carrinho!')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-petshop">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>PetShop Amigo Animal</h4>
+                    <p>📞 (11) 3456-7890</p>
+                    <p>📧 contato@petshop.com</p>
+                    <p>📍 Rua dos Animais, 123</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h4>Horário</h4>
+                    <p>Seg a Sex: 8h às 20h</p>
+                    <p>Sábados: 9h às 18h</p>
+                    <p>Domingos: Fechado</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h4>Links Rápidos</h4>
+                    <p><a href="index.html">🏠 Início</a></p>
+                    <p><a href="produtos.html">🛍️ Produtos</a></p>
+                    <p><a href="servicos.html">🐕 Serviços</a></p>
+                    <p><a href="contato.html">📞 Contato</a></p>
+                    <p><a href="cadastro.html">📝 Cadastro</a></p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-icons">
+                        <i class="bi bi-instagram"></i> Instagram<br>
+                        <i class="bi bi-facebook"></i> Facebook<br>
+                        <i class="bi bi-whatsapp"></i> WhatsApp
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2026 PetShop Amigo Animal. Todos os direitos reservados.</p>
+                <p>Desenvolvido por Bernardo - Projeto da Disciplina Web</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript Personalizado -->
+    <script>
+        // Função para mostrar mensagens (simulação de carrinho)
+        function mostrarMensagem(mensagem) {
+            alert('🐾 ' + mensagem);
+        }
+        
+        // Relógio dinâmico
+        function atualizarRelogio() {
+            const agora = new Date();
+            const horas = agora.getHours().toString().padStart(2, '0');
+            const minutos = agora.getMinutes().toString().padStart(2, '0');
+            const segundos = agora.getSeconds().toString().padStart(2, '0');
+            
+            const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            const diaSemana = diasSemana[agora.getDay()];
+            
+            const relogio = document.getElementById('clock');
+            if (relogio) {
+                relogio.innerHTML = `🕐 ${diaSemana} - ${horas}:${minutos}:${segundos}`;
+            }
+        }
+        
+        // Atualizar relógio a cada segundo
+        setInterval(atualizarRelogio, 1000);
+        
+        // Função de acessibilidade - Alto contraste
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            
+            // Salvar preferência no localStorage
+            if (document.body.classList.contains('high-contrast')) {
+                localStorage.setItem('highContrast', 'true');
+                alert('🌓 Modo alto contraste ativado!');
+            } else {
+                localStorage.setItem('highContrast', 'false');
+                alert('🌓 Modo alto contraste desativado!');
+            }
+        }
+        
+        // Verificar preferência de contraste ao carregar a página
+        window.onload = function() {
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+            
+            // Inicializar relógio
+            atualizarRelogio();
+        };
+        
+        // Função para validar idade do pet
+        function validarIdade(input) {
+            const idade = parseInt(input.value);
+            if (idade < 0 || idade > 30) {
+                alert('Por favor, insira uma idade válida (0 a 30 anos)');
+                input.value = '';
+            }
+        }
+        
+        // Função para formatar CPF
+        function formatarCPF(campo) {
+            let valor = campo.value.replace(/\D/g, '');
+            
+            if (valor.length <= 11) {
+                valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+                valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+                valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                campo.value = valor;
+            }
+        }
+        
+        // Função para formatar telefone
+        function formatarTelefone(campo) {
+            let valor = campo.value.replace(/\D/g, '');
+            
+            if (valor.length <= 11) {
+                if (valor.length <= 10) {
+                    valor = valor.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                } else {
+                    valor = valor.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                }
+                campo.value = valor;
+            }
+        }
+    </script>
+</body>
+</html>
