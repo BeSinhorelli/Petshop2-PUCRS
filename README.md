@@ -69,3 +69,4 @@ Para que o site funcione corretamente, crie uma pasta chamada `imagens` na raiz 
 
 ## 🌐 Publicação no GitHub Pages
 O site está disponível online através do GitHub Pages no seguinte endereço:
+https://besinhorelli.github.io/Petshop2-PUCRS/
